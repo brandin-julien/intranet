@@ -1,0 +1,4 @@
+services:
+#    intranet.example:
+#        class: IntranetBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
