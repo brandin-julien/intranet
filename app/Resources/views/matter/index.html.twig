@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Matters list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for matter in matters %}
+            <tr>
+                <td><a href="{{ path('matter_show', { 'id': matter.id }) }}">{{ matter.id }}</a></td>
+                <td>{{ matter.name }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('matter_show', { 'id': matter.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('matter_edit', { 'id': matter.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('matter_new') }}">Create a new matter</a>
+        </li>
+    </ul>
+{% endblock %}
