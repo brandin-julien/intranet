@@ -5,12 +5,12 @@ namespace IntranetBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * matter
+ * Grade
  *
- * @ORM\Table(name="matter")
- * @ORM\Entity(repositoryClass="IntranetBundle\Repository\matterRepository")
+ * @ORM\Table(name="grade")
+ * @ORM\Entity(repositoryClass="IntranetBundle\Repository\GradeRepository")
  */
-class matter
+class Grade
 {
     /**
      * @var int
@@ -22,13 +22,11 @@ class matter
     private $id;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="grade", type="integer")
      */
-    private $name;
-
-
+    private $grade;
 
 
     /**
@@ -42,29 +40,27 @@ class matter
     }
 
     /**
-     * Set name
+     * Set grade
      *
-     * @param string $name
+     * @param integer $grade
      *
-     * @return matter
+     * @return Grade
      */
-    public function setName($name)
+    public function setGrade($grade)
     {
-        $this->name = $name;
+        $this->grade = $grade;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get grade
      *
-     * @return string
+     * @return int
      */
-    public function getName()
+    public function getGrade()
     {
-        return $this->name;
+        return $this->grade;
     }
-
-
 }
 

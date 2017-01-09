@@ -2,12 +2,61 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Intranet{% endblock %}</title>
+
+        <link rel="stylesheet" href="{{ asset('bundles/intranet/Css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/intranet/Css/font-awesome/css/font-awesome.min.css') }}">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
         {% block stylesheets %}{% endblock %}
+
+        <style>
+            body{
+                background: #eeeeee;
+            }
+        </style>
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+
+    <header>
+        <div class="message-footer-header text-center">
+            TODO
+            {#
+            <a href="{{ path('home') }}" class="message-footer-header"><img src="http://www.vectortemplates.com/raster/batman/batman-logo-big.gif" style="width: 50px"></a>
+            #}
+        </div>
+{#
+        <div class="col-lg-3">
+            <ul>
+                <li> <a href="{{ path('home')  }}">Home</a> </li>
+                <li> <a href="{{ path('home') }}">Profile</a> </li>
+            </ul>
+        </div>
+#}
+
+    </header>
+
+    <div class="content container" id="container">
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+    </div>
+    {% block javascripts %}{% endblock %}
+
+    <footer>
+        <div class="message-footer-header text-center">
+            &copy; Julien Brandin
+        </div>
+    </footer>
+
     </body>
 </html>

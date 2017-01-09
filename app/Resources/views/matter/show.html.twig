@@ -3,7 +3,9 @@
 {% block body %}
     <h1>Matter</h1>
 
-    <table>
+    {#
+
+      <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -16,17 +18,37 @@
         </tbody>
     </table>
 
+    #}
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="col-sm-12">Id</th>
+            <th class="col-sm-12">Name</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ matter.id }}</td>
+                <td>{{ matter.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
     <ul>
         <li>
-            <a href="{{ path('matter_index') }}">Back to the list</a>
+            <a href="{{ path('matter_index') }}" class="btn btn-info">Back to the list</a>
         </li>
         <li>
-            <a href="{{ path('matter_edit', { 'id': matter.id }) }}">Edit</a>
+            <a href="{{ path('matter_edit', { 'id': matter.id }) }}" class="btn btn-warning">Edit</a>
         </li>
         <li>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+                <input type="submit" value="Delete" class="btn btn-danger">
             {{ form_end(delete_form) }}
         </li>
     </ul>
+
+    <h2>Ajouter liste des profs et des eleves</h2>
+
 {% endblock %}

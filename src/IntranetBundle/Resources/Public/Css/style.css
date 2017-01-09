@@ -1,0 +1,31 @@
+li{
+    list-style: none;
+}
+
+header{
+    height: 50px;
+    position: fixed;
+    top: 0;
+    background: #265a88;
+    width: 100%;
+}
+
+.content{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+footer {
+    height: 50px;
+    position: fixed;
+    bottom: 0;
+    background: #265a88;
+    width: 100%;
+}
+
+.message-footer-header{
+    text-align: center;
+    color: white;
+    vertical-align: middle;
+    margin-top: 20px;
+}

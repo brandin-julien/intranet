@@ -3,26 +3,38 @@
 {% block body %}
     <h1>Matters list</h1>
 
-    <table>
+    <table class="table-striped">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Actions</th>
+                {#
+                <th class="col-sm-12">Id</th>
+                #}
+                <th class="col-sm-12">Name</th>
+                <th class="col-sm-12">Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for matter in matters %}
             <tr>
+                {#
                 <td><a href="{{ path('matter_show', { 'id': matter.id }) }}">{{ matter.id }}</a></td>
-                <td>{{ matter.name }}</td>
+                #}
+                <td >{{ matter.name }}</td>
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('matter_show', { 'id': matter.id }) }}">show</a>
+                            <a href="{{ path('matter_show', { 'id': matter.id }) }}">
+                                <button class="btn btn-info">
+                                    show
+                                </button>
+                            </a>
                         </li>
                         <li>
-                            <a href="{{ path('matter_edit', { 'id': matter.id }) }}">edit</a>
+                            <a href="{{ path('matter_edit', { 'id': matter.id }) }}">
+                                <button class="btn btn-warning">
+                                    edit
+                                </button>
+                            </a>
                         </li>
                     </ul>
                 </td>

@@ -5,12 +5,11 @@
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <input type="submit" value="Create" class="btn btn-success" />
     {{ form_end(form) }}
-
     <ul>
         <li>
-            <a href="{{ path('matter_index') }}">Back to the list</a>
+            <a href="{{ path('matter_index') }}" class="btn btn-info">Back to the list</a>
         </li>
     </ul>
 {% endblock %}
