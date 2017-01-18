@@ -18,14 +18,6 @@
         </div>
     {% endif %}
 
-    {#
-    <div class="alert alert-success">
-    {% for message in app.session.flashbag.get('info') %}
-        <p>{{ message }}</p>
-      {% endfor %}
-    </div>
-    #}
-
     <form action="{{ path("promote") }}" id="promoteForm" name="promoteForm" method="post">
 
         <label for="user">user</label>
