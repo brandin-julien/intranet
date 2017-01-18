@@ -5,7 +5,8 @@ namespace IntranetBundle\Controller;
 use IntranetBundle\Entity\matter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Matter controller.
@@ -133,4 +134,25 @@ class matterController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * @Route("/inscription/{id}", name="matter_inscription")
+     */
+    public function matterInscription(Request $request, matter $matter){
+
+        $matter->addUser($this->getUser());
+
+        $em = $this->getDoctrine()->getManager();
+
+        try{
+            $em->flush($matter);
+            $message = "Félicitation, vous etes maintenant inscrit à ce cours";
+        } catch(\Exception $e){
+            $message = "Une erreur a eu lieu, peut-etre déja inscrit à ce cours";
+        }
+        return $this->render('IntranetBundle:Default:message.html.twig', array(
+            'message' => $message,
+        ));
+    }
+
 }

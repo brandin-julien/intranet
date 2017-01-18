@@ -28,8 +28,10 @@ class matter
      */
     private $name;
 
-
-
+    /**
+     * @ORM\ManyToMany(targetEntity="User",  inversedBy="matters")
+     */
+    private $users;
 
     /**
      * Get id
@@ -66,5 +68,45 @@ class matter
     }
 
 
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add user
+     *
+     * @param \IntranetBundle\Entity\User $user
+     *
+     * @return matter
+     */
+    public function addUser(\IntranetBundle\Entity\User $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \IntranetBundle\Entity\User $user
+     */
+    public function removeUser(\IntranetBundle\Entity\User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+}

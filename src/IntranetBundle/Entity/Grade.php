@@ -28,6 +28,12 @@ class Grade
      */
     private $grade;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="comment", type="text")
+     */
+    private $comment;
 
     /**
      * Get id
@@ -62,5 +68,28 @@ class Grade
     {
         return $this->grade;
     }
-}
 
+    /**
+     * Set comment
+     *
+     * @param string $comment
+     *
+     * @return Grade
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+}

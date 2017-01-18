@@ -18,9 +18,48 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="matter", mappedBy="users")
+     */
+    private $matters;
+
     public function __construct()
     {
         parent::__construct();
         // your own logic
+    }
+
+    /**
+     * Add matter
+     *
+     * @param \IntranetBundle\Entity\matter $matter
+     *
+     * @return User
+     */
+    public function addMatter(\IntranetBundle\Entity\matter $matter)
+    {
+        $this->matters[] = $matter;
+
+        return $this;
+    }
+
+    /**
+     * Remove matter
+     *
+     * @param \IntranetBundle\Entity\matter $matter
+     */
+    public function removeMatter(\IntranetBundle\Entity\matter $matter)
+    {
+        $this->matters->removeElement($matter);
+    }
+
+    /**
+     * Get matters
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMatters()
+    {
+        return $this->matters;
     }
 }
