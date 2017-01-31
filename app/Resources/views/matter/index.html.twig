@@ -46,13 +46,23 @@
                                 </a>
                             </li>
                         {% else %}
-                            <li>
-                                <a href="{{ path('matter_inscription', { 'id': matter.id }) }}">
-                                    <button class="btn btn-success">
-                                        S'inscrire
-                                    </button>
-                                </a>
-                            </li>
+                            {% if matter in mattersUser %}
+                                <li>
+                                    <a href="{{ path('matter_inscription', { 'id': matter.id }) }}">
+                                        <button class="btn btn-success">
+                                            Désinscrire
+                                        </button>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ path('matter_inscription', { 'id': matter.id }) }}">
+                                        <button class="btn btn-success">
+                                            S'inscrire
+                                        </button>
+                                    </a>
+                                </li>
+                            {% endif %}
                         {% endif %}
                     </ul>
                 </td>
@@ -61,9 +71,12 @@
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('matter_new') }}">Create a new matter</a>
-        </li>
-    </ul>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <ul>
+            <li>
+                <a href="{{ path('matter_new') }}">Create a new matter</a>
+            </li>
+        </ul>
+    {% endif %}
+
 {% endblock %}

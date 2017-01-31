@@ -40,16 +40,44 @@
         <li>
             <a href="{{ path('matter_index') }}" class="btn btn-info">Back to the list</a>
         </li>
-        <li>
-            <a href="{{ path('matter_edit', { 'id': matter.id }) }}" class="btn btn-warning">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete" class="btn btn-danger">
-            {{ form_end(delete_form) }}
-        </li>
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <li>
+                <a href="{{ path('matter_edit', { 'id': matter.id }) }}" class="btn btn-warning">Edit</a>
+            </li>
+            <li>
+                {{ form_start(delete_form) }}
+                    <input type="submit" value="Delete" class="btn btn-danger">
+                {{ form_end(delete_form) }}
+            </li>
+        {% endif %}
     </ul>
 
-    <h2>Ajouter liste des profs et des eleves</h2>
+    <h2>Liste des profs</h2>
 
-{% endblock %}
+    {% set teacher = false %}
+
+    <ul>
+        {% for user in users %}
+            {% if user.roles == "ROLE_ADMIN" %}
+                <li>{{ user.username }}</li>
+                {% set techer = true %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+    {% if teacher == false %}
+            Aucun prof inscrit pour cette matiere
+    {% endif %}
+
+    <h2>Liste des élèves</h2>
+
+        {% if users is empty %}
+            Aucun inscrit pour cette matiere
+        {% endif %}
+
+        <ul>
+            {% for user in users %}
+                <li>{{ user.username }}</li>
+            {% endfor %}
+        </ul>
+        {% endblock %}

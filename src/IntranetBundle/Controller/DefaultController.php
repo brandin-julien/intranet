@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Dans le parent casdade remove
+ */
+
 namespace IntranetBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,7 +19,18 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('IntranetBundle:Default:index.html.twig');
+
+        $user = $this->getUser();
+        //$em = $this->getDoctrine()->getManager();
+
+        if($user == null) {
+            return $this->redirectToRoute("fos_user_security_login");
+        }
+
+        $matters = $user->getMatters();
+        return $this->render('IntranetBundle:Default:index.html.twig', array(
+            'matters' => $matters,
+        ));
     }
 
     /**

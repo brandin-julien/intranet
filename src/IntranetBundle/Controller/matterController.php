@@ -27,8 +27,13 @@ class matterController extends Controller
 
         $matters = $em->getRepository('IntranetBundle:matter')->findAll();
 
+        $user = $this->getUser();
+
+        $mattersUser = $user->getMatters();
+
         return $this->render('matter/index.html.twig', array(
             'matters' => $matters,
+            'mattersUser' => $mattersUser,
         ));
     }
 
@@ -66,10 +71,15 @@ class matterController extends Controller
      */
     public function showAction(matter $matter)
     {
+        $users = $matter->getUsers();
+
+        //var_dump($users);exit();
+
         $deleteForm = $this->createDeleteForm($matter);
 
         return $this->render('matter/show.html.twig', array(
             'matter' => $matter,
+            'users' => $users,
             'delete_form' => $deleteForm->createView(),
         ));
     }
