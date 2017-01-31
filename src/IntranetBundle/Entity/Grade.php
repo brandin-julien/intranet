@@ -36,6 +36,18 @@ class Grade
     private $comment;
 
     /**
+     * @ORM\ManyToOne(targetEntity="matter")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $matter;
+
+    /**
+     * @ORM\OneToOne(targetEntity="User", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
      * Get id
      *
      * @return int
@@ -91,5 +103,53 @@ class Grade
     public function getComment()
     {
         return $this->comment;
+    }
+
+    /**
+     * Set matter
+     *
+     * @param \IntranetBundle\Entity\matter $matter
+     *
+     * @return Grade
+     */
+    public function setMatter(\IntranetBundle\Entity\matter $matter)
+    {
+        $this->matter = $matter;
+
+        return $this;
+    }
+
+    /**
+     * Get matter
+     *
+     * @return \IntranetBundle\Entity\matter
+     */
+    public function getMatter()
+    {
+        return $this->matter;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \IntranetBundle\Entity\User $user
+     *
+     * @return Grade
+     */
+    public function setUser(\IntranetBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \IntranetBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

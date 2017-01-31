@@ -58,9 +58,9 @@
 
     <ul>
         {% for user in users %}
-            {% if user.roles == "ROLE_ADMIN" %}
+            {% if user.roles == ["ROLE_ADMIN","ROLE_USER"] %}
                 <li>{{ user.username }}</li>
-                {% set techer = true %}
+                {% set teacher = true %}
             {% endif %}
         {% endfor %}
     </ul>
@@ -75,9 +75,19 @@
             Aucun inscrit pour cette matiere
         {% endif %}
 
+        {% set student = false %}
+
         <ul>
             {% for user in users %}
-                <li>{{ user.username }}</li>
+                {% if user.roles != ["ROLE_ADMIN","ROLE_USER"] %}
+                    <li>{{ user.username }}</li>
+                    {% set student = true %}
+                {% endif %}
             {% endfor %}
         </ul>
-        {% endblock %}
+
+        {% if student == false %}
+            Aucun étudiant inscrit pour cette matiere
+        {% endif %}
+
+{% endblock %}

@@ -2,7 +2,6 @@
 
 {% block body %}
 
-
     <div class="content text-center">
 
         <h3>Liste de mes matières:</h3>
@@ -11,9 +10,39 @@
                 <li>{{ matter.name }}</li>
             {% endfor %}
         </ul>
+
+        <h3>Liste de mes notes:</h3>
+
+        {% if grades is not empty %}
+
+            <div class="col-sm-4"> </div>
+
+            <table class="table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-sm-4">Matiere</th>
+                        <th class="col-sm-4">Note</th>
+                        <th class="col-sm-4">Commentaire</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for grade in grades %}
+                        <tr>
+                            <td>{{ grade.matter.name }}</td>
+                            <td>{{ grade.grade }}</td>
+                            <td>{{ grade.comment }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <p>Moyenne: {{ average }}</p>
+
+        {% else %}
+            Aucune note disponible pour le moment
+        {% endif %}
+
     </div>
-
-
 
 {% endblock %}
 

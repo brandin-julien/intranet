@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Grade</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ grade.id }}</td>
+            </tr>
+            <tr>
+                <th>Grade</th>
+                <td>{{ grade.grade }}</td>
+            </tr>
+            <tr>
+                <th>Comment</th>
+                <td>{{ grade.comment }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('grade_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('grade_edit', { 'id': grade.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
