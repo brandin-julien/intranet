@@ -10,4 +10,20 @@ namespace IntranetBundle\Repository;
  */
 class GradeRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findByUserAndMatter($user_id, $matter_id){
+        $qb = $this->createQueryBuilder('a');
+
+        $qb->where('a.user = :user_id')
+            ->setParameter('user_id', $user_id)
+            ->andWhere('a.matter = :matter_id')
+            ->setParameter('matter_id', $matter_id)
+        ;
+
+        return $qb
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 }

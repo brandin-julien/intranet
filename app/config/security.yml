@@ -45,3 +45,4 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/promote, role: ROLE_SUPER_ADMIN }
+        - { path: ^/graduation, role: ROLE_ADMIN }
