@@ -159,12 +159,20 @@ class DefaultController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $session = $request->getSession();
 
             $grade->setMatter($matter);
             $grade->setUser($user);
 
             $em->persist($grade);
             $em->flush($grade);
+
+            $session->getFlashBag()->add('message', 'élève noté');
+
+            return $this->redirectToRoute('graduationMatter', array(
+                'Request' => $request,
+                'matter' => $matter->getId()
+            ));
         }
 
             return $this->render('IntranetBundle:Default:graduationUser.html.twig', array(

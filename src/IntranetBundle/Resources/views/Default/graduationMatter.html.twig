@@ -2,6 +2,17 @@
 
 {% block body %}
 
+    {#
+    {% if app.session.flashbag.get('message') is not empty %}
+    <div class="alert alert-success">
+    #}
+    {% for message in app.session.flashbag.get('message') %}
+        <p class="alert alert-success">{{ message }}</p>
+    {% endfor %}
+    {#
+    </div>
+    {% endif %}
+    #}
 
     <h3>Liste de mes eleves:</h3>
 
