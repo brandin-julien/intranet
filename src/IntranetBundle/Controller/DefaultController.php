@@ -92,6 +92,52 @@ class DefaultController extends Controller
         return $this->render('IntranetBundle:Default:promote.html.twig', array("users" => $users));
     }
 
+
+    /**
+    * @Route("assignment", name="assignment")
+     */
+    public function assignmentAction(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            $em = $this->getDoctrine()->getManager();
+            $session = $request->getSession();
+
+            $matter = $request->request->get("matter");
+            $useId = $request->request->get("user");
+
+            $matter = $em->getRepository('IntranetBundle:matter')->find($matter);
+            $user = $em->getRepository('IntranetBundle:User')->find($useId);
+
+            $matter->addUser($user);
+
+            try{
+                $em->flush();
+                $session->getFlashBag()->add('success', 'Prof ajouté a la matiere');
+            } catch(\Exception $e){
+                $session->getFlashBag()->add('error', 'Une erreur a eu lieux');
+            }
+
+                /*
+                foreach ($matter->getUsers() as $mat){
+                    var_dump($mat->getId() == $matter->getId());
+                }
+                die;
+
+                if(in_array($user, $matter->getUsers())){
+                */
+            /*}else{
+                $session->getFlashBag()->add('error', 'Une erreur a eu lieux');
+            }*/
+        }
+
+        $matters = $this->getDoctrine()->getRepository("IntranetBundle:matter")->findAll();
+        $users = $this->getDoctrine()->getRepository("IntranetBundle:User")->findByRole("ROLE_ADMIN");
+        return $this->render('IntranetBundle:Default:assignment.html.twig', array(
+            "users" => $users,
+            "matters" => $matters
+        ));
+    }
+
     /**
      * @Route("graduation", name="graduationIndex")
      */
@@ -103,17 +149,41 @@ class DefaultController extends Controller
         ));
     }
 
+    public function authorisedTeacher($matter, $mattersUser){
+        foreach ($mattersUser as $mat){
+            if($mat == $matter){
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * @Route("graduation/{matter}", name="graduationMatter")
      */
     public function graduationAction(Request $request ,matter $matter)
     {
+        $mattersUser = $this->getUser()->getMatters();
         $users = $matter->getUsers();
+
+        if(!$this->authorisedTeacher($matter, $mattersUser))
+            return $this->render('IntranetBundle:Default:message.html.twig', array(
+                "message" => "Vous n'etes pas le professeur de cette matiere"
+            ));
 
         return $this->render('IntranetBundle:Default:graduationMatter.html.twig', array(
             "users" => $users,
             "matter" => $matter
         ));
+    }
+
+    public function registerStudent($user, $users){
+
+        foreach ($users as $student){
+            if($student == $user)
+                return true;
+        }
+        return false;
     }
 
     /**
@@ -129,6 +199,19 @@ class DefaultController extends Controller
         //$em = $this->getDoctrine()->getManager();
 
         //$grade = $em->getRepository('IntranetBundle:Grade')->findByUser($user);
+
+        $mattersUser = $this->getUser()->getMatters();
+        $users = $matter->getUsers();
+
+        if(!$this->authorisedTeacher($matter, $mattersUser))
+            return $this->render('IntranetBundle:Default:message.html.twig', array(
+                "message" => "Vous n'etes pas le professeur de cette matiere"
+            ));
+
+        if(!$this->authorisedTeacher($user, $users))
+            return $this->render('IntranetBundle:Default:message.html.twig', array(
+                "message" => "eleve non inscrit à cette matiere"
+            ));
 
         $repository = $this
             ->getDoctrine()
@@ -180,7 +263,6 @@ class DefaultController extends Controller
             'form' => $form->createView(),
         ));
     }
-
 
     /**
      * @Route("test", name="test")

@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Promote</h1>
+
+    {% for message in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    {% for message in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
+
+    {#
+    {% if app.session.flashbag.get('success') is not empty %}
+        <div class="alert alert-success">
+            {% for message in app.session.flashbag.get('success') %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% elseif app.session.flashbag.get('error') is not empty %}
+        <div class="alert alert-danger">
+            {% for message in app.session.flashbag.get('error') %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    #}
+
+    <form action="{{ path("assignment") }}" id="assignmentForm" name="assignmentForm" method="post">
+
+        <label for="user">user</label>
+
+        <select name="user">
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }}</option>
+            {% endfor %}
+        </select>
+
+        <br>
+
+        <label for="matter">matter</label>
+
+        <select name="matter">
+            {% for matter in matters %}
+                <option value="{{ matter.id }}">{{ matter.name }}</option>
+            {% endfor %}
+        </select>
+
+        <br>
+        <input type="submit" class="btn btn-success">
+
+    </form>
+
+{% endblock %}
