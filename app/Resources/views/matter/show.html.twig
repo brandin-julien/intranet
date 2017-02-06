@@ -71,23 +71,51 @@
 
     <h2>Liste des élèves</h2>
 
-        {% if users is empty %}
-            Aucun inscrit pour cette matiere
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <ul>
+                {% for grade in grades %}
+                    <li>{{ grade.user.username }}</li>
+                        <li>
+                            <ul>
+                                <table class="table-striped">
+                                    <thead>
+                                    <th>matiere</th>
+                                    <th>note</th>
+                                    <th>commentaire</th>
+                                    </thead>
+                                    <tbody>
+                                    <td>{{ grade.matter.name }}</td>
+                                    <td>{{ grade.grade }}</td>
+                                    <td>{{ grade.comment }}</td>
+                                    </tbody>
+                                </table>
+                            </ul>
+                        </li>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+
+            {% if users is empty %}
+                Aucun inscrit pour cette matiere
+            {% endif %}
+
+            {% set student = false %}
+
+            <ul>
+                {% for user in users %}
+                    {% if user.roles != ["ROLE_ADMIN","ROLE_USER"] %}
+                        <li>{{ user.username }}</li>
+                        {% set student = true %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
+            {% if student == false %}
+                Aucun étudiant inscrit pour cette matiere
+            {% endif %}
+
         {% endif %}
 
-        {% set student = false %}
-
-        <ul>
-            {% for user in users %}
-                {% if user.roles != ["ROLE_ADMIN","ROLE_USER"] %}
-                    <li>{{ user.username }}</li>
-                    {% set student = true %}
-                {% endif %}
-            {% endfor %}
-        </ul>
-
-        {% if student == false %}
-            Aucun étudiant inscrit pour cette matiere
-        {% endif %}
 
 {% endblock %}

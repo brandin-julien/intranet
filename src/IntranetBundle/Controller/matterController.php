@@ -75,11 +75,16 @@ class matterController extends Controller
 
         //var_dump($users);exit();
 
+        $em = $this->getDoctrine()->getManager();
+
+        $grades = $em->getRepository('IntranetBundle:Grade')->findByMatter($matter);
+
         $deleteForm = $this->createDeleteForm($matter);
 
         return $this->render('matter/show.html.twig', array(
             'matter' => $matter,
             'users' => $users,
+            'grades' => $grades,
             'delete_form' => $deleteForm->createView(),
         ));
     }
