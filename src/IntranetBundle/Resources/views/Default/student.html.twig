@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2>Liste des élèves</h2>
+
+    {% if users is empty %}
+        Aucun inscrit pour cette matiere
+    {% endif %}
+
+    <ul>
+        {% for user in users %}
+            {% if user.roles[0] == "ROLE_USER" %}
+                <li>{{ user.username }}</li>
+                <ul>
+                    {% for matters in user.matters %}
+                        <li>
+                        {{ matters.name }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <br>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+{% endblock %}

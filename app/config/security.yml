@@ -47,3 +47,5 @@ security:
         - { path: ^/promote, role: ROLE_SUPER_ADMIN }
         - { path: ^/assignment, role: ROLE_SUPER_ADMIN }
         - { path: ^/graduation, role: ROLE_ADMIN }
+        - { path: ^/teacher, role: ROLE_SUPER_ADMIN }
+        - { path: ^/student, role: ROLE_SUPER_ADMIN }

@@ -265,6 +265,35 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("student", name="student")
+     */
+    public function studentAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $users = $em->getRepository('IntranetBundle:User')->findAll();
+
+        return $this->render('IntranetBundle:Default:student.html.twig', array(
+            'users' => $users
+        ));
+
+    }
+
+    /**
+     * @Route("teacher", name="teacher")
+     */
+    public function teacherAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $users = $em->getRepository('IntranetBundle:User')->findAll();
+
+        return $this->render('IntranetBundle:Default:teacher.html.twig', array(
+            'users' => $users
+        ));
+    }
+
+    /**
      * @Route("test", name="test")
      */
     public function testAction(Request $request)
