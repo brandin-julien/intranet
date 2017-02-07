@@ -30,6 +30,9 @@ class matterController extends Controller
 
         $user = $this->getUser();
 
+        if ($user->hasRole("ROLE_ADMIN"))
+            $matters = $user->getMatters();
+
         $mattersUser = $user->getMatters();
 
         return $this->render('matter/index.html.twig', array(
@@ -64,6 +67,15 @@ class matterController extends Controller
         ));
     }
 
+    public function authorisedTeacher($matter, $mattersUser){
+        foreach ($mattersUser as $mat){
+            if($mat == $matter){
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Finds and displays a matter entity.
      *
@@ -75,6 +87,9 @@ class matterController extends Controller
         if(sizeof($this->getUser()->getRoles()) == 1){
             throw new NotFoundHttpException('Sorry not found!');
         }
+
+        if (!$this->authorisedTeacher($matter, $this->getUser()->getMatters()))
+            throw new NotFoundHttpException('Sorry not found!');
 
         $users = $matter->getUsers();
 

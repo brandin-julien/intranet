@@ -50,3 +50,15 @@ footer {
 .listMenu li a:hover{
     color:#eeeeee;
 }
+
+.home{
+    color:#eeeeee;
+}
+
+.home:visited{
+    color:#eeeeee;
+}
+
+.home:hover{
+    color:#eeeeee;
+}

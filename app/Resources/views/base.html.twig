@@ -32,7 +32,7 @@
 
     <header>
         <div class="message-footer-header text-center">
-            MyIntranet
+            <a href="{{ path('home') }}" class="home">MyIntranet</a>
             {#
             <a href="{{ path('home') }}" class="message-footer-header"><img src="http://www.vectortemplates.com/raster/batman/batman-logo-big.gif" style="width: 50px"></a>
             #}
@@ -55,6 +55,7 @@
                     <li> <a href="{{ path('home')  }}">Home</a> </li>
                     <li> <a href="{{ path('matter_index') }}">Matter</a> </li>
                 {% endif %}
+                <li> <a href="{{ path('fos_user_security_logout') }}">Logout</a> </li>
             </ul>
         </div>
 
