@@ -4,10 +4,6 @@
 
     <h2>Liste des élèves</h2>
 
-    {% if users is empty %}
-        Aucun inscrit pour cette matiere
-    {% endif %}
-
     <ul>
         {% for user in users %}
             {% if user.roles[0] == "ROLE_USER" %}

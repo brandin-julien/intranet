@@ -2,71 +2,26 @@
 
 {% block body %}
 
-    {#
-
-      <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ matter.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ matter.name }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    #}
-    {#
-    <table class="table">
-        <thead>
-        <tr>
-            <th class="col-sm-12">Id</th>
-            <th class="col-sm-12">Name</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ matter.id }}</td>
-                <td>{{ matter.name }}</td>
-            </tr>
-        </tbody>
-    </table>
-    #}
     <h1>{{ matter.name }}</h1>
 
-    <ul>
-        <li>
-            <a href="{{ path('matter_index') }}" class="btn btn-info">Back to the list</a>
-        </li>
-        {% if is_granted('ROLE_SUPER_ADMIN') %}
-            <li>
-                <a href="{{ path('matter_edit', { 'id': matter.id }) }}" class="btn btn-warning">Edit</a>
-            </li>
-            <li>
-                {{ form_start(delete_form) }}
-                    <input type="submit" value="Delete" class="btn btn-danger">
-                {{ form_end(delete_form) }}
-            </li>
-        {% endif %}
-    </ul>
+{% if is_granted('ROLE_SUPER_ADMIN') %}
 
     <h2>Liste des profs</h2>
 
-    {% set teacher = false %}
+        {% set teacher = false %}
 
-    <ul>
-        {% for user in users %}
-            {% if user.roles == ["ROLE_ADMIN","ROLE_USER"] %}
-                <li>{{ user.username }}</li>
-                {% set teacher = true %}
-            {% endif %}
-        {% endfor %}
-    </ul>
+        <ul>
+            {% for user in users %}
+                {% if user.roles == ["ROLE_ADMIN","ROLE_USER"] %}
+                    <li>{{ user.username }}</li>
+                    {% set teacher = true %}
+                {% endif %}
+            {% endfor %}
+        </ul>
 
-    {% if teacher == false %}
-            Aucun prof inscrit pour cette matiere
+        {% if teacher == false %}
+                Aucun prof inscrit pour cette matiere
+        {% endif %}
     {% endif %}
 
     <h2>Liste des élèves</h2>
@@ -94,6 +49,10 @@
                 {% endfor %}
             </ul>
 
+            {% if grades is empty %}
+                Aucun inscrit pour cette matiere
+            {% endif %}
+
         {% else %}
 
             {% if users is empty %}
@@ -117,5 +76,22 @@
 
         {% endif %}
 
+    <hr>
+
+    <ul>
+        <li>
+            <a href="{{ path('matter_index') }}" class="btn btn-info">Back to the list</a>
+        </li>
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <li>
+                <a href="{{ path('matter_edit', { 'id': matter.id }) }}" class="btn btn-warning">Edit</a>
+            </li>
+            <li>
+                {{ form_start(delete_form) }}
+                <input type="submit" value="Delete" class="btn btn-danger">
+                {{ form_end(delete_form) }}
+            </li>
+        {% endif %}
+    </ul>
 
 {% endblock %}

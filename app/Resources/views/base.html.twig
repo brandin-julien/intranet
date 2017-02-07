@@ -32,19 +32,31 @@
 
     <header>
         <div class="message-footer-header text-center">
-            TODO
+            MyIntranet
             {#
             <a href="{{ path('home') }}" class="message-footer-header"><img src="http://www.vectortemplates.com/raster/batman/batman-logo-big.gif" style="width: 50px"></a>
             #}
         </div>
-{#
-        <div class="col-lg-3">
-            <ul>
-                <li> <a href="{{ path('home')  }}">Home</a> </li>
-                <li> <a href="{{ path('home') }}">Profile</a> </li>
+
+        <div style="width: 60px">
+            <ul class="listMenu" style="color: #eeeeee">
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <li> <a href="{{ path('home')  }}">Home</a> </li>
+                    <li> <a href="{{ path('matter_index') }}">Matter</a> </li>
+                    <li> <a href="{{ path('promote') }}">Promote</a> </li>
+                    <li> <a href="{{ path('assignment') }}">Assigner</a> </li>
+                    <li> <a href="{{ path('student') }}">élèves</a> </li>
+                    <li> <a href="{{ path('teacher') }}">profs</a> </li>
+                {% elseif is_granted('ROLE_ADMIN') %}
+                    <li> <a href="{{ path('home')  }}">Home</a> </li>
+                    <li> <a href="{{ path('matter_index') }}">Matter</a> </li>
+                    <li> <a href="{{ path('graduationIndex') }}">Noter</a> </li>
+                {% else %}
+                    <li> <a href="{{ path('home')  }}">Home</a> </li>
+                    <li> <a href="{{ path('matter_index') }}">Matter</a> </li>
+                {% endif %}
             </ul>
         </div>
-#}
 
     </header>
 

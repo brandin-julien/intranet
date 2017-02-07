@@ -13,9 +13,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-
-
 class DefaultController extends Controller
 {
     /**
@@ -116,18 +113,6 @@ class DefaultController extends Controller
             } catch(\Exception $e){
                 $session->getFlashBag()->add('error', 'Une erreur a eu lieux');
             }
-
-                /*
-                foreach ($matter->getUsers() as $mat){
-                    var_dump($mat->getId() == $matter->getId());
-                }
-                die;
-
-                if(in_array($user, $matter->getUsers())){
-                */
-            /*}else{
-                $session->getFlashBag()->add('error', 'Une erreur a eu lieux');
-            }*/
         }
 
         $matters = $this->getDoctrine()->getRepository("IntranetBundle:matter")->findAll();
@@ -191,15 +176,6 @@ class DefaultController extends Controller
      */
     public function graduationUserAction(Request $request ,matter $matter, User $user)
     {
-        /*
-        var_dump($user);
-        exit();
-        */
-
-        //$em = $this->getDoctrine()->getManager();
-
-        //$grade = $em->getRepository('IntranetBundle:Grade')->findByUser($user);
-
         $mattersUser = $this->getUser()->getMatters();
         $users = $matter->getUsers();
 
@@ -226,17 +202,6 @@ class DefaultController extends Controller
         else
             $grade = new Grade();
 
-        /*
-        $connection = $em->getConnection();
-        $statement = $connection->prepare("SELECT * FROM `grade` WHERE  user_id = :user_id and matter_id = :mater_id");
-        $statement->bindValue('user_id', $user->getId());
-        $statement->bindValue('mater_id', $matter->getId());
-        $statement->execute();
-        $results = $statement->fetchAll();
-        var_dump($results);
-        */
-        //exit();
-
         $form = $this->createForm('IntranetBundle\Form\GradeType', $grade);
         $form->handleRequest($request);
 
@@ -258,9 +223,14 @@ class DefaultController extends Controller
             ));
         }
 
-            return $this->render('IntranetBundle:Default:graduationUser.html.twig', array(
+        $back = $this->get('router')->generate('graduationMatter', array(
+            'matter' => $matter->getId()
+        ));
+
+        return $this->render('IntranetBundle:Default:graduationUser.html.twig', array(
             'grade' => $grade,
             'form' => $form->createView(),
+            'linkForBack' => $back
         ));
     }
 
@@ -291,41 +261,5 @@ class DefaultController extends Controller
         return $this->render('IntranetBundle:Default:teacher.html.twig', array(
             'users' => $users
         ));
-    }
-
-    /**
-     * @Route("test", name="test")
-     */
-    public function testAction(Request $request)
-    {
-        $user = $this->getUser();
-
-        $em = $this->getDoctrine()->getManager();
-        $grade = $em->getRepository('IntranetBundle:Grade')->findByUser($user);
-
-        var_dump($grade);
-
-        /*
-        $matters = $user->getMatters();
-
-        $matter = $matters[0];
-
-        var_dump($matter->getId());
-
-        $grade = new Grade();
-        $grade->setGrade(20);
-        $grade->setComment("bravo");
-
-        $grade->setMatter($matter);
-        $grade->setUser($user);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($grade);
-        $em->flush($grade);
-
-        var_dump($grade);
-*/
-        var_dump("test");
-        exit();
     }
 }

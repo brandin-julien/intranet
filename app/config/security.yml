@@ -49,3 +49,7 @@ security:
         - { path: ^/graduation, role: ROLE_ADMIN }
         - { path: ^/teacher, role: ROLE_SUPER_ADMIN }
         - { path: ^/student, role: ROLE_SUPER_ADMIN }
+        - { path: ^/matter/[0-9]/, role: ROLE_SUPER_ADMIN }
+        - { path: ^/matter/new, role: ROLE_SUPER_ADMIN }
+        - { path: ^/matter/, role: ROLE_USER }
+        - { path: ^/matter/inscription, role: ROLE_USER }

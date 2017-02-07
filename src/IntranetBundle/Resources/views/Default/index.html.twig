@@ -7,9 +7,9 @@
         {% if is_granted('ROLE_SUPER_ADMIN') %}
             <h1>Index</h1>
         {% elseif is_granted('ROLE_ADMIN') %}
-            {% include 'IntranetBundle:Bloc:blocNote.html.twig' %}
+            {% include 'IntranetBundle:Bloc:blocMatter.html.twig' %}
         {% else %}
-            {% include 'IntranetBundle:Bloc:blocNote.html.twig' %}
+            {% include 'IntranetBundle:Bloc:blocMatter.html.twig' %}
             {% include 'IntranetBundle:Bloc:blocNote.html.twig' %}
         {% endif %}
 

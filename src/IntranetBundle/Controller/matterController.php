@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Matter controller.
@@ -71,9 +72,11 @@ class matterController extends Controller
      */
     public function showAction(matter $matter)
     {
-        $users = $matter->getUsers();
+        if(sizeof($this->getUser()->getRoles()) == 1){
+            throw new NotFoundHttpException('Sorry not found!');
+        }
 
-        //var_dump($users);exit();
+        $users = $matter->getUsers();
 
         $em = $this->getDoctrine()->getManager();
 
@@ -127,6 +130,14 @@ class matterController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $grades = $this->getDoctrine()->getRepository("IntranetBundle:Grade")->findByMatter($matter);
+
+            foreach ($grades as $grade) {
+                $em->remove($grade);
+                $em->flush($grade);
+            }
+
             $em->remove($matter);
             $em->flush($matter);
         }
@@ -154,6 +165,10 @@ class matterController extends Controller
      * @Route("/inscription/{id}", name="matter_inscription")
      */
     public function matterInscription(Request $request, matter $matter){
+
+        if(sizeof($this->getUser()->getRoles()) != 1){
+            throw new NotFoundHttpException('Sorry not found!');
+        }
 
         $matter->addUser($this->getUser());
 
